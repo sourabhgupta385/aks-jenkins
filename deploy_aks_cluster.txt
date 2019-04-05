@@ -1,0 +1,87 @@
+1. Install Azure CLI with apt:
+
+	1.1 Get packages needed for the install process:
+
+		sudo apt-get update
+		sudo apt-get install curl apt-transport-https lsb-release gpg
+	
+	1.2 Download and install the Microsoft signing key:
+
+		curl -sL https://packages.microsoft.com/keys/microsoft.asc | \
+			gpg --dearmor | \
+			sudo tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
+	
+	1.3 Add the Azure CLI software repository:
+
+		AZ_REPO=$(lsb_release -cs)
+		echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
+			sudo tee /etc/apt/sources.list.d/azure-cli.list
+			
+	1.4 Update repository information and install the azure-cli package:
+
+		sudo apt-get update
+		sudo apt-get install azure-cli
+		
+2. Run the Azure CLI with the az command.
+
+	2.1 Run the login command.
+		
+		az login
+		Login in the browser with the azure account.
+		
+3. Activate the correct subscription. Azure uses the concept of subscriptions to manage spending. You can get a list of subscriptions your account has access to  by running:
+
+	az account list --refresh --output table
+	
+	3.1 Pick the subscription you want to use for creating the cluster, and set that as your default. If you only have one subscription you can ignore this step.
+
+		az account set -s <YOUR-CHOSEN-SUBSCRIPTION-NAME>
+
+4. Creating cluster:
+			
+	4.1 Create directory:
+		
+		mkdir <CLUSTER-NAME>
+		cd <CLUSTER-NAME>
+		For eg: mkdir sourabhAKSCluster
+		        cd sourabhAKSCluster
+		
+	4.2 Generate ssh key pair:
+
+		ssh-keygen -f ssh-key-<CLUSTER-NAME>
+		For eg: ssh-keygen -f ssh-key-sourabhAKSCluster
+		
+	4.3 Create a resource group:
+
+		az group create --name <RESOURCE_GROUP_NAME> --location eastus
+		For eg: az group create --name rgSourabh --location eastus
+		
+	4.3 Create AKS cluster:
+
+		az aks create --name <CLUSTER-NAME> \
+              --resource-group <RESOURCE_GROUP_NAME> \
+              --ssh-key-value ssh-key-<CLUSTER-NAME>.pub \
+              --node-count 3 \
+              --node-vm-size Standard_D2s_v3 \
+              --output table
+			  
+		For eg: az aks create --name sourabhAKSCluster --resource-group rgSourabh --ssh-key-value ssh-key-sourabhAKSCluster.pub --node-count 3 --node-vm-size Standard_D2s_v3 --output table
+
+5. Connect to the cluster:
+
+	5.1 Install kubectl cli:
+	
+		az aks install-cli
+	
+	5.2 Get credentials from Azure for kubectl to work:
+		
+		az aks get-credentials --name sourabhAKSCluster --resource-group rgSourabh --output table
+		
+	5.3 Verify the connection to your cluster:
+	
+		kubectl get nodes
+		
+6. Delete cluster:
+
+	az group delete --name <RESOURCE_GROUP_NAME> --yes --no-wait
+	For Eg az group delete --name rgSourabh --yes --no-wait
