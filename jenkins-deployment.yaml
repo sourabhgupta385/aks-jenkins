@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jenkins-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      containers:
+      - name: jenkins
+        image: jenkins:2.60.3
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "2000Mi"
+            cpu: "500m"
+          limits:
+            memory: "6000Mi"
+            cpu: "2000m"
