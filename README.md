@@ -46,6 +46,8 @@ jenkins-service        LoadBalancer   <IP_ADDRESS>   <pending>      8080:30936/T
 
 If you get EXTERNAL-IP as pending, then wait for sometime and execute previous command again. You will get a IP address listed in EXTERNAL-IP.
 
+Yeah! That's all for installation. :)
+
 Jenkins can be accessed on below address:
 
 ```
