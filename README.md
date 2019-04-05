@@ -44,7 +44,7 @@ Previous command will give output something like below:
 NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)          AGE
 jenkins-service        LoadBalancer   <IP_ADDRESS>   <pending>      8080:30936/TCP   3h
 
-If you get EXTERNAL-IP as <pending>, then wait for sometime and again execute previous command. You will get a IP address listed in EXTERNAL-IP.
+If you get EXTERNAL-IP as pending, then wait for sometime and execute previous command again. You will get a IP address listed in EXTERNAL-IP.
 
 Jenkins can be accessed on below address:
 
