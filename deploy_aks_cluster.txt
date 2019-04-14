@@ -71,7 +71,7 @@
 
 	5.1 Install kubectl cli:
 	
-		az aks install-cli
+		sudo az aks install-cli
 	
 	5.2 Get credentials from Azure for kubectl to work:
 		
