@@ -6,6 +6,6 @@ metadata:
     run: jenkins-leader
 spec:
   capacity:
-    storage: 500Mi
+    storage: 3Gi
   accessModes:
     - ReadWriteOnce
