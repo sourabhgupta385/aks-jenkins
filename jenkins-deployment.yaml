@@ -14,9 +14,10 @@ spec:
     spec:
       containers:
       - name: jenkins
-        image: jenkinsci/jenkins:lts
+        image: jenkinsci/jenkins:2.150.1
         ports:
         - containerPort: 8080
+        - containerPort: 50000
         resources:
           requests:
             memory: "2000Mi"
