@@ -1,0 +1,17 @@
+#Tutorial Link: https://www.oracle.com/webfolder/technetwork/tutorials/obe/oci/configure_jenkins_kubernetes_plugin/configurekubernetesplugin.html
+
+#Kubernetes Server URL
+kubectl config view | grep server | cut -f 2- -d ":" | tr -d " "
+
+#Kubernetes Secret Token
+kubectl describe secret $(kubectl get secrets | grep default | cut -f1 -d ' ') | grep -E '^token' | cut -f2 -d':' | tr -d '\t'
+
+#Kubernetes server certificate key
+#Copy the certificate-authority-data from the kubeconfig configuration file
+export certificatedata=paste the certificate-authority-data within single quotation marks here
+echo $certificatedata | base64 --decode
+
+#Now add this output as "Secret Text" in jenkins
+
+#In the k8s cluster perform the following command:
+kubectl apply -f rbac.yaml
